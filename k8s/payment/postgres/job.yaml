@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migration-ddl-payment
+spec:
+  template:
+    spec:
+      containers:
+        - name: liquibase
+          image: liquibase/liquibase:latest
+          command: ["liquibase", "--defaultsFile=/liquibase/properties/liquibase.properties", "update"]
+          volumeMounts:
+            - name: cm-changelog
+              mountPath: "/liquibase/changelog/"
+              readOnly: true
+            - name: cm-properties
+              mountPath: "/liquibase/properties/"
+              readOnly: true
+      restartPolicy: Never
+      volumes:
+      - name: cm-changelog
+        configMap:
+          name: config-migration-changelog-payment
+      - name: cm-properties
+        configMap:
+          name: config-migration-properties-payment

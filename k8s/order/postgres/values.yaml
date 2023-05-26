@@ -1,0 +1,7 @@
+global:
+  postgresql:
+    auth:
+      postgresPassword: "order"
+      username: "order_user"
+      password: "order_pwd"
+      database: "order_db"

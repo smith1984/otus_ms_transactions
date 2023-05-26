@@ -1,0 +1,30 @@
+ktor:
+  application:
+    modules:
+      - ru.beeline.order.ApplicationKt.module
+  deployment:
+    port: 8080
+
+psql:
+  user: "$POSTGRES_USER:user"
+  password: "$POSTGRES_PASSWORD:password"
+  schema: "$POSTGRES_SCHEMA:schema_test"
+  url: "$POSTGRES_URL:jdbc:postgresql://localhost:5432/db_test"
+
+svcs:
+  - order:
+      host: "$ORDER_HOST:localhost"
+      port: "$ORDER_PORT:8080"
+      path: "$ORDER_PATH:order"
+  - payment:
+      host: "$PAYMENT_HOST:localhost"
+      port: "$PAYMENT_PORT:8081"
+      path: "$PAYMENT_PATH:payment"
+  - warehouse:
+      host: "$WAREHOUSE_HOST:localhost"
+      port: "$WAREHOUSE_PORT:8082"
+      path: "$WAREHOUSE_PATH:warehouse"
+  - delivery:
+      host: "$DELIVERY_HOST:localhost"
+      port: "$DELIVERY_PORT:8083"
+      path: "$DELIVERY_PATH:delivery"

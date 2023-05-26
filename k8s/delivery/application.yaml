@@ -1,0 +1,11 @@
+ktor:
+  application:
+    modules:
+      - ru.beeline.delivery.ApplicationKt.module
+  deployment:
+    port: 8083
+psql:
+  user: "$POSTGRES_USER:user"
+  password: "$POSTGRES_PASSWORD:password"
+  schema: "$POSTGRES_SCHEMA:delivery"
+  url: "$POSTGRES_URL:jdbc:postgresql://postgresql-delivery:5432/delivery_db"

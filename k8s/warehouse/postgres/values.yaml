@@ -1,0 +1,7 @@
+global:
+  postgresql:
+    auth:
+      postgresPassword: "warehouse"
+      username: "warehouse_user"
+      password: "warehouse_pwd"
+      database: "warehouse_db"

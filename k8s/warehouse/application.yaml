@@ -1,0 +1,11 @@
+ktor:
+  application:
+    modules:
+      - ru.beeline.warehouse.ApplicationKt.module
+  deployment:
+    port: 8082
+psql:
+  user: "$POSTGRES_USER:user"
+  password: "$POSTGRES_PASSWORD:password"
+  schema: "$POSTGRES_SCHEMA:warehouse"
+  url: "$POSTGRES_URL:jdbc:postgresql://postgresql-warehouse:5432/warehouse_db"

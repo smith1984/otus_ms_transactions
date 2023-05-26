@@ -1,0 +1,7 @@
+global:
+  postgresql:
+    auth:
+      postgresPassword: "delivery"
+      username: "delivery_user"
+      password: "delivery_pwd"
+      database: "delivery_db"

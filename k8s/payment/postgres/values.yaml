@@ -1,0 +1,7 @@
+global:
+  postgresql:
+    auth:
+      postgresPassword: "payment"
+      username: "payment_user"
+      password: "payment_pwd"
+      database: "payment_db"

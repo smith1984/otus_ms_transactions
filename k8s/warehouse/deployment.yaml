@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: warehouse-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: warehouse-app
+  template:
+    metadata:
+      labels:
+        app: warehouse-app
+    spec:
+      containers:
+        - name: warehouse
+          image: smith1984/svc_warehouse:0.0.1
+          ports:
+            - name: web
+              containerPort: 8082
+          livenessProbe:
+            httpGet:
+              port: 8082
+              path: /health
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 2
+          readinessProbe:
+            httpGet:
+              port: 8082
+              path: /health
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          volumeMounts:
+            - name: config
+              mountPath: "/app/resources/application.yaml"
+              subPath: "application.yaml"
+              readOnly: true
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secret-warehouse
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-warehouse
+                  key: password
+      volumes:
+        - name: config
+          configMap:
+            name: config-application-warehouse

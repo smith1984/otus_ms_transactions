@@ -1,0 +1,556 @@
+{
+	"info": {
+		"_postman_id": "6d084ee0-9524-4563-8092-4875000568c2",
+		"name": "HW collection TR",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25545992"
+	},
+	"item": [
+		{
+			"name": "Create order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create order\", function(){",
+							"pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"Content order created\", function(){",
+							"const responseJson = pm.response.json();",
+							"pm.expect(responseJson.status).to.eql(\"PENDING\");",
+							"pm.expect(responseJson.contents[0].item).to.eql(\"phone\");",
+							"pm.expect(responseJson.contents[0].amount).to.eql(1);",
+							"pm.expect(responseJson.contents[0].price).to.eql(123.45);",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"order_id\",  pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"status\":\"PENDING\",\"contents\":[{\"item\":\"phone\",\"amount\":1,\"price\":123.45}]}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}:{{basePort}}/order/order",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"order",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Read order\", function(){",
+							"pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"Read order\", function(){",
+							"const responseJson = pm.response.json();",
+							"pm.expect(responseJson.status).to.eql(\"PENDING\");",
+							"pm.expect(responseJson.contents[0].item).to.eql(\"phone\");",
+							"pm.expect(responseJson.contents[0].amount).to.eql(1);",
+							"pm.expect(responseJson.contents[0].price).to.eql(123.45);",
+							"pm.expect(responseJson.id).to.eql(pm.collectionVariables.get(\"order_id\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}:{{basePort}}/order/order/{{order_id}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"order",
+						"order",
+						"{{order_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create payment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create payment\", function(){",
+							"pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"Content pyment created\", function(){",
+							"const responseJson = pm.response.json();",
+							"pm.expect(responseJson.status).to.eql(\"SUCCESS\");",
+							"pm.expect(responseJson.cost).to.eql(123.45);",
+							"pm.expect(responseJson.orderId).to.eql(pm.collectionVariables.get(\"order_id\"));",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"payment_id\",  pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"orderId\":\"{{order_id}}\",\"cost\":123.45,\"status\":\"SUCCESS\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}:{{basePort}}/payment/payment",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"payment",
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read payment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Read payment\", function(){",
+							"pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"Read payment\", function(){",
+							"const responseJson = pm.response.json();",
+							"pm.expect(responseJson.status).to.eql(\"SUCCESS\");",
+							"pm.expect(responseJson.cost).to.eql(123.45);",
+							"pm.expect(responseJson.orderId).to.eql(pm.collectionVariables.get(\"order_id\"));",
+							"pm.expect(responseJson.id).to.eql(pm.collectionVariables.get(\"payment_id\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}:{{basePort}}/payment/payment/{{payment_id}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"payment",
+						"payment",
+						"{{payment_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create warehouse item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create warehouse\", function(){",
+							"pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"Content warehouse created\", function(){",
+							"const responseJson = pm.response.json();",
+							"pm.expect(responseJson[0].status).to.eql(\"RESERVED\");",
+							"pm.expect(responseJson[0].item).to.eql(\"phone\");",
+							"pm.expect(responseJson[0].orderId).to.eql(pm.collectionVariables.get(\"order_id\"));",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"warehouse_item_id\",  pm.response.json()[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\"orderId\":\"{{order_id}}\",\"item\":\"phone\",\"status\":\"RESERVED\"}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}:{{basePort}}/warehouse/warehouse",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"warehouse",
+						"warehouse"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read warehouse item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Read warehouse item\", function(){",
+							"pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"Read warehouse item\", function(){",
+							"const responseJson = pm.response.json();",
+							"pm.expect(responseJson.status).to.eql(\"RESERVED\");",
+							"pm.expect(responseJson.item).to.eql(\"phone\");",
+							"pm.expect(responseJson.orderId).to.eql(pm.collectionVariables.get(\"order_id\"));",
+							"pm.expect(responseJson.id).to.eql(pm.collectionVariables.get(\"warehouse_item_id\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}:{{basePort}}/warehouse/warehouse/{{warehouse_item_id}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"warehouse",
+						"warehouse",
+						"{{warehouse_item_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create delivery",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create delivery\", function(){",
+							"pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"Content delivery created\", function(){",
+							"const responseJson = pm.response.json();",
+							"pm.expect(responseJson.status).to.eql(\"SCHEDULED\");",
+							"pm.expect(responseJson.timeDelivery).to.eql(\"2024-05-26T16:00\");",
+							"pm.expect(responseJson.orderId).to.eql(pm.collectionVariables.get(\"order_id\"));",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"delivery_id\",  pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"orderId\":\"{{order_id}}\",\"timeDelivery\":\"2024-05-26T16:00:00\",\"status\":\"SCHEDULED\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}:{{basePort}}/delivery/delivery",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"delivery",
+						"delivery"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read delivery",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Read delivery\", function(){",
+							"pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"Read delivery\", function(){",
+							"const responseJson = pm.response.json();",
+							"pm.expect(responseJson.status).to.eql(\"SCHEDULED\");",
+							"pm.expect(responseJson.timeDelivery).to.eql(\"2024-05-26T16:00\");",
+							"pm.expect(responseJson.orderId).to.eql(pm.collectionVariables.get(\"order_id\"));",
+							"pm.expect(responseJson.id).to.eql(pm.collectionVariables.get(\"delivery_id\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}:{{basePort}}/delivery/delivery/{{delivery_id}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"delivery",
+						"delivery",
+						"{{delivery_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create order saga",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create order with saga\", function(){",
+							"pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"Result create order with saga\", function(){",
+							"const responseJson = pm.response.json();",
+							"pm.expect(responseJson[0].status).to.eql(\"SUCCESS\");",
+							"pm.expect(responseJson[0].contents[0].item).to.eql(\"phone\");",
+							"pm.expect(responseJson[0].contents[0].amount).to.eql(1);",
+							"pm.expect(responseJson[0].contents[0].price).to.eql(123.45);",
+							"pm.expect(responseJson[1].status).to.eql(\"SUCCESS\");",
+							"pm.expect(responseJson[1].cost).to.eql(123.45);",
+							"pm.expect(responseJson[2].status).to.eql(\"SCHEDULED\");",
+							"pm.expect(responseJson[2].timeDelivery).to.eql(\"2024-06-26T16:00\");",
+							"pm.expect(responseJson[3][0].status).to.eql(\"RESERVED\");",
+							"pm.expect(responseJson[3][0].item).to.eql(\"phone\");",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"contents\":[{\"item\":\"phone\",\"amount\":1,\"price\":123.45}],\"timeDelivery\":\"2024-06-26T16:00:00\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}:{{basePort}}/order/order/saga",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"order",
+						"order",
+						"saga"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create order saga rollback case",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create order with saga rollback\", function(){",
+							"pm.response.to.have.status(424)",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"contents\":[{\"item\":\"phone\",\"amount\":1,\"price\":123.45}],\"timeDelivery\":\"2023-04-26T16:00:00\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}:{{basePort}}/order/order/saga",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"port": "{{basePort}}",
+					"path": [
+						"order",
+						"order",
+						"saga"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"tests[\"[INFO] Request: \" + (('data' in request) ? request['data'] : '') ] = true;",
+					"tests[\"[INFO] Response: \" + responseBody] = true;"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "arch.homework",
+			"type": "string"
+		},
+		{
+			"key": "basePort",
+			"value": "80",
+			"type": "string"
+		},
+		{
+			"key": "delivery_id",
+			"value": ""
+		},
+		{
+			"key": "warehouse_item_id",
+			"value": ""
+		},
+		{
+			"key": "payment_id",
+			"value": ""
+		},
+		{
+			"key": "order_id",
+			"value": ""
+		}
+	]
+}
