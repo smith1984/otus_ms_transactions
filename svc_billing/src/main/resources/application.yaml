@@ -1,0 +1,11 @@
+ktor:
+  application:
+    modules:
+      - ru.beeline.billing.ApplicationKt.module
+  deployment:
+    port: 8085
+psql:
+  user: "$POSTGRES_USER:user"
+  password: "$POSTGRES_PASSWORD:password"
+  schema: "$POSTGRES_SCHEMA:schema_test"
+  url: "$POSTGRES_URL:jdbc:postgresql://localhost:5432/db_test"

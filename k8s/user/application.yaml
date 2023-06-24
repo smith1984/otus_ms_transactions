@@ -1,0 +1,21 @@
+ktor:
+  application:
+    modules:
+      - ru.beeline.user.ApplicationKt.module
+  deployment:
+    port: 8084
+psql:
+  user: "$POSTGRES_USER:user"
+  password: "$POSTGRES_PASSWORD:password"
+  schema: "$POSTGRES_SCHEMA:users"
+  url: "$POSTGRES_URL:jdbc:postgresql://postgresql-user:5432/user_db"
+
+svcs:
+  - user:
+      host: "$USER_HOST:user-service"
+      port: "$USER_PORT:80"
+      path: "$USER_PATH:user"
+  - billing:
+      host: "$BILLING_HOST:billing-service"
+      port: "$BILLING_PORT:80"
+      path: "$BILLING_PATH:billing"

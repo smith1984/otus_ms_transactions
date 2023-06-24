@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id:  1
+      author:  mppetrov
+      changes:
+        - sql:
+            "CREATE SCHEMA IF NOT EXISTS billing;"
+        - createTable:
+            schemaName: billing
+            tableName: billings
+            columns:
+              - column:
+                  name: id
+                  type: char(36)
+                  constraints:
+                    primaryKey: true
+                    unique: true
+                    nullable: false
+              - column:
+                  name: wallet
+                  type: decimal(38,2)
+        - createTable:
+            schemaName: billing
+            tableName: history_billings
+            columns:
+              - column:
+                  name: id
+                  type: char(36)
+                  constraints:
+                    primaryKey: true
+                    unique: true
+                    nullable: false
+              - column:
+                  name: billing_id
+                  type: char(36)
+              - column:
+                  name: sum
+                  type: decimal(38,2)
+              - column:
+                  name: last_value_wallet
+                  type: decimal(38,2)
+              - column:
+                  name: current_value_wallet
+                  type: decimal(38,2)
+              - column:
+                  name: type_operation
+                  type: varchar(36)
+              - column:
+                  name: status
+                  type: varchar(36)

@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: notification-app
+  template:
+    metadata:
+      labels:
+        app: notification-app
+    spec:
+      containers:
+        - name: notification
+          image: smith1984/svc_notification:0.0.1
+          ports:
+            - name: web
+              containerPort: 8086
+          livenessProbe:
+            httpGet:
+              port: 8086
+              path: /health
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 2
+          readinessProbe:
+            httpGet:
+              port: 8086
+              path: /health
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          volumeMounts:
+            - name: config
+              mountPath: "/app/resources/application.yaml"
+              subPath: "application.yaml"
+              readOnly: true
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secret-notification
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-notification
+                  key: password
+      volumes:
+        - name: config
+          configMap:
+            name: config-application-notification
