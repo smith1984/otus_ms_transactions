@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: billing-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: billing-app
+  template:
+    metadata:
+      labels:
+        app: billing-app
+    spec:
+      containers:
+        - name: billing
+          image: smith1984/svc_billing:0.0.1
+          ports:
+            - name: web
+              containerPort: 8085
+          livenessProbe:
+            httpGet:
+              port: 8085
+              path: /health
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 2
+          readinessProbe:
+            httpGet:
+              port: 8085
+              path: /health
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          volumeMounts:
+            - name: config
+              mountPath: "/app/resources/application.yaml"
+              subPath: "application.yaml"
+              readOnly: true
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secret-billing
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-billing
+                  key: password
+      volumes:
+        - name: config
+          configMap:
+            name: config-application-billing

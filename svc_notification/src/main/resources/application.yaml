@@ -1,0 +1,26 @@
+ktor:
+  application:
+    modules:
+      - ru.beeline.notification.ApplicationKt.module
+  deployment:
+    port: 8086
+
+psql:
+  user: "$POSTGRES_USER:user"
+  password: "$POSTGRES_PASSWORD:password"
+  schema: "$POSTGRES_SCHEMA:schema_test"
+  url: "$POSTGRES_URL:jdbc:postgresql://localhost:5432/db_test"
+
+kafka:
+  bootstrap: "$KAFKA_BOOTSTRAP:localhost:9092"
+  groupId: "$KAFKA_GROUP_ID:notification"
+  topic: "$KAFKA_TOPIC:dbserver1.schema_test.history_billings"
+  keyDeserializer: "$KAFKA_KEY_DESERIALIZER:org.apache.kafka.common.serialization.StringDeserializer"
+  valueDeserializer: "$KAFKA_VALUE_DESERIALIZER:org.apache.kafka.common.serialization.StringDeserializer"
+  offsetReset: "$KAFKA_OFFSET_RESET:latest"
+
+svcs:
+  - user:
+      host: "$USER_HOST:localhost"
+      port: "$USER_PORT:8084"
+      path: "$USER_PATH:user"

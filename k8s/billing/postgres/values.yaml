@@ -1,0 +1,10 @@
+global:
+  postgresql:
+    auth:
+      postgresPassword: "billing"
+      username: "billing_user"
+      password: "billing_pwd"
+      database: "billing_db"
+primary:
+  extendedConfiguration: |-
+    wal_level = logical
