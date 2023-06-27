@@ -65,4 +65,13 @@ dependencies {
 
     implementation(project(":svc_user"))
 
+    val prometheus_version: String by project
+    val logback_appenders_version: String by project
+    val fluent_logger_version: String by project
+
+    implementation("io.ktor:ktor-server-call-logging:$ktor_version")
+    implementation("io.ktor:ktor-server-metrics-micrometer:$ktor_version")
+    implementation("com.sndyuk:logback-more-appenders:$logback_appenders_version")
+    implementation("org.fluentd:fluent-logger:$fluent_logger_version")
+    implementation("io.micrometer:micrometer-registry-prometheus:$prometheus_version")
 }

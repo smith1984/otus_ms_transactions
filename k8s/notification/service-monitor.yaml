@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: notification-metrics-monitor
+  labels:
+    app: notification-metrics-monitor
+spec:
+  endpoints:
+    - port: http
+      scrapeTimeout: 30s
+      path: /actuator/prometheus
+  namespaceSelector:
+    matchNames:
+      - otus-ms-hw-transactions
+  selector:
+    matchLabels:
+      app: notification-app
+  

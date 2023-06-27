@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: delivery-service
+  labels:
+    app: delivery-app
 spec:
   selector:
     app: delivery-app

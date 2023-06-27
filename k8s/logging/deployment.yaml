@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fluent-bit-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fluent-bit-app
+  template:
+    metadata:
+      labels:
+        app: fluent-bit-app
+    spec:
+      containers:
+        - name: fluent-bit
+          image: fluent/fluent-bit:2.1.4
+          imagePullPolicy: Always
+          ports:
+            - name: service
+              containerPort: 2020
+            - name: forward
+              containerPort: 24224
+          volumeMounts:
+            - name: config
+              mountPath: "/fluent-bit/etc/fluent-bit.conf"
+              subPath: "fluent-bit.conf"
+              readOnly: true
+            - name: parser
+              mountPath: "/fluent-bit/etc/parsers.conf"
+              subPath: "parsers.conf"
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: config-fluent-bit
+        - name: parser
+          configMap:
+            name: config-parser-fluent-bit

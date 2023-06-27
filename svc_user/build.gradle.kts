@@ -40,6 +40,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-config-yaml:$ktor_version")
+
     implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-java:$ktor_version")
@@ -52,4 +53,14 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
 
     implementation(project(":svc_billing"))
+
+    val prometheus_version: String by project
+    val logback_appenders_version: String by project
+    val fluent_logger_version: String by project
+
+    implementation("io.ktor:ktor-server-call-logging:$ktor_version")
+    implementation("io.ktor:ktor-server-metrics-micrometer:$ktor_version")
+    implementation("com.sndyuk:logback-more-appenders:$logback_appenders_version")
+    implementation("org.fluentd:fluent-logger:$fluent_logger_version")
+    implementation("io.micrometer:micrometer-registry-prometheus:$prometheus_version")
 }

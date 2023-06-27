@@ -15,6 +15,7 @@ spec:
       containers:
         - name: billing
           image: smith1984/svc_billing:0.0.1
+          imagePullPolicy: Always
           ports:
             - name: web
               containerPort: 8085
@@ -36,6 +37,10 @@ spec:
               mountPath: "/app/resources/application.yaml"
               subPath: "application.yaml"
               readOnly: true
+            - name: logback
+              mountPath: "/app/resources/logback.xml"
+              subPath: "logback.xml"
+              readOnly: true
           env:
             - name: POSTGRES_USER
               valueFrom:
@@ -51,3 +56,6 @@ spec:
         - name: config
           configMap:
             name: config-application-billing
+        - name: logback
+          configMap:
+            name: config-logback-billing

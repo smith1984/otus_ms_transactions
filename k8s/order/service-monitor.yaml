@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: order-metrics-monitor
+  labels:
+    app: order-metrics-monitor
+spec:
+  endpoints:
+    - port: http
+      scrapeTimeout: 30s
+      path: /actuator/prometheus
+  namespaceSelector:
+    matchNames:
+      - otus-ms-hw-transactions
+  selector:
+    matchLabels:
+      app: order-app
+  

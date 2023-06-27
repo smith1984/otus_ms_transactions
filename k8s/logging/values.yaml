@@ -1,0 +1,10 @@
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  hosts:
+    - host: opensearch.arch.homework
+      paths:
+        -  path: /
+           backend:
+             serviceName: opensearch-dashboards
+             servicePort: 5601

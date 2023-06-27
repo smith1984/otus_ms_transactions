@@ -8,8 +8,7 @@ metadata:
 
 spec:
   rules:
-    - host: arch.homework
-      http:
+  - http:
         paths:
           - path: /payment(/|$)(.*)
             pathType: Prefix

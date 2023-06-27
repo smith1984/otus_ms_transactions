@@ -7,7 +7,7 @@ metadata:
 spec:
   version: 3.1.0
   replicas: 1
-  image: smith1984/connect-debezium:latest
+  image: smith1984/connect-debezium:0.0.1
   bootstrapServers: debezium-cluster-kafka-bootstrap:9092
   config:
     group.id: connect-cluster
