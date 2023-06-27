@@ -103,6 +103,9 @@ kubectl delete cm config-fluent-bit
 helm delete prometheus
 helm delete opensearch
 helm delete opensearch-dashboards
+helm delete postgresql-keycloak
+helm delete keycloak
+helm delete oauth2-proxy
 helm delete nginx
 
 kubectl delete -f ./k8s/namespaces.yaml

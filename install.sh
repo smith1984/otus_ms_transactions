@@ -9,6 +9,7 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx/
 helm repo add opensearch https://opensearch-project.github.io/helm-charts/
 helm repo add fluent https://fluent.github.io/helm-charts
+helm repo add oauth2-proxy https://oauth2-proxy.github.io/manifests
 helm repo update
 
 helm install nginx ingress-nginx/ingress-nginx -f ./k8s/nginx/nginx-ingress.yaml
@@ -22,6 +23,10 @@ kubectl create cm config-parser-fluent-bit --from-file=./k8s/logging/parsers.con
 kubectl apply -f ./k8s/logging/deployment.yaml
 kubectl apply -f ./k8s/logging/service.yaml
 
+#auth
+helm install postgresql-keycloak bitnami/postgresql -f ./k8s/auth/keycloak/postgres/values.yaml
+helm install keycloak bitnami/keycloak -f ./k8s/auth/keycloak/values.yaml
+helm install oauth2-proxy oauth2-proxy/oauth2-proxy -f ./k8s/auth/oauth2-proxy/values.yaml
 
 #kafka
 kubectl create -f https://operatorhub.io/install/strimzi-kafka-operator.yaml

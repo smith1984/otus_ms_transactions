@@ -1,0 +1,17 @@
+auth:
+  adminUser: admin
+  adminPassword: admin
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  hostname: keycloak.arch.homework
+  pathType: Prefix
+  path: /
+postgresql:
+  enabled: false
+externalDatabase:
+  host: postgresql-keycloak
+  port: 5432
+  user: keycloak
+  database: keycloak
+  password: keycloak
