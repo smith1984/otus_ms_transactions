@@ -15,6 +15,4 @@ include("svc_delivery")
 include("svc_order")
 include("svc_payment")
 include("svc_warehouse")
-include("svc_user")
-include("svc_billing")
-include("svc_notification")
+
