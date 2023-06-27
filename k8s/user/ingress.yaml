@@ -5,6 +5,8 @@ metadata:
   name: user-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
+#    nginx.ingress.kubernetes.io/auth-url: "http://keycloak.otus-ms-hw-transactions/oauth2/auth"
+#    nginx.ingress.kubernetes.io/auth-response-headers: "Authorization"
 
 spec:
   rules:
