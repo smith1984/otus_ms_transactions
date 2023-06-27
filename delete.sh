@@ -42,44 +42,5 @@ kubectl delete cm config-migration-properties-order
 kubectl delete cm config-migration-changelog-order
 helm delete postgresql-order
 
-#billing
-kubectl delete -f ./k8s/billing/ingress.yaml
-kubectl delete -f ./k8s/billing/service.yaml
-kubectl delete -f ./k8s/billing/deployment.yaml
-kubectl delete -f ./k8s/billing/secrets.yaml
-kubectl delete cm config-application-billing
-kubectl delete -f ./k8s/billing/postgres/job.yaml
-kubectl delete cm config-migration-properties-billing
-kubectl delete cm config-migration-changelog-billing
-helm delete postgresql-billing
-
-#user
-kubectl delete -f ./k8s/user/ingress.yaml
-kubectl delete -f ./k8s/user/service.yaml
-kubectl delete -f ./k8s/user/deployment.yaml
-kubectl delete -f ./k8s/user/secrets.yaml
-kubectl delete cm config-application-user
-kubectl delete -f ./k8s/user/postgres/job.yaml
-kubectl delete cm config-migration-properties-user
-kubectl delete cm config-migration-changelog-user
-helm delete postgresql-user
-
-#notification
-kubectl delete -f ./k8s/notification/ingress.yaml
-kubectl delete -f ./k8s/notification/service.yaml
-kubectl delete -f ./k8s/notification/deployment.yaml
-kubectl delete -f ./k8s/notification/secrets.yaml
-kubectl delete cm config-application-notification
-kubectl delete -f ./k8s/notification/postgres/job.yaml
-kubectl delete cm config-migration-properties-notification
-kubectl delete cm config-migration-changelog-notification
-helm delete postgresql-notification
-
-#kafka and debezium
-kubectl delete -f ./k8s/debezium/pg-connector.yaml
-kubectl delete -f ./k8s/debezium/connector.yaml
-kubectl delete -f ./k8s/debezium/kafka.yaml
-kubectl delete -f https://operatorhub.io/install/strimzi-kafka-operator.yaml
-
 helm delete nginx
 kubectl delete -f ./k8s/namespaces.yaml
